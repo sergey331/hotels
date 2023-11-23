@@ -21,7 +21,8 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->boolean('is_admin')->default(false);
-            $table->integer('plan_id');
+            $table->integer('plan_id')->nullable();
+            $table->dateTime('plan_expired')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

@@ -25,6 +25,8 @@ class User extends Authenticatable
         'is_admin',
         'email',
         'password',
+        'plan_id',
+        'plan_expired'
 
     ];
 
