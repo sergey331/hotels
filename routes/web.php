@@ -5,7 +5,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\PlansController;
-
+use App\Http\Controllers\HotelController;
 
 Route::get('/', function () {
     return Inertia::render('Home', [
@@ -20,6 +20,10 @@ Route::middleware(['plan','auth'])->group(function () {
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
+    Route::prefix('profile')->group(function () {
+        Route::resource('hotels',HotelController::class);
+    });
+
 });
 
 
