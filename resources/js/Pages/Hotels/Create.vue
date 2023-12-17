@@ -25,15 +25,14 @@ const nextStep = () => {
 
 <template>
     <AuthenticatedLayout>
-        <h1 class="text-lg font-bold text-gray-700 leading-tight text-center mt-12 mb-5">New Form</h1>
         <div class="w-1/2 m-auto">
             <!-- start step indicators -->
             <div class="form-header flex gap-3 mb-4 text-xs text-center">
-                <span class="stepIndicator flex-1 pb-8 relative">General info</span>
-                <span class="stepIndicator flex-1 pb-8 relative">Social Profiles</span>
-                <span class="stepIndicator flex-1 pb-8 relative">Personal Details</span>
+                <h1 class="stepIndicator flex-1 pb-8 relative">General info</h1>
+                <h1 class="stepIndicator flex-1 pb-8 relative">Rooms</h1>
+                <h1 class="stepIndicator flex-1 pb-8 relative">Services+</h1>
             </div>
-            {{ step }}
+
             <div v-if="step === 1"  class="step-1" >
                 <Step1/>
             </div>
