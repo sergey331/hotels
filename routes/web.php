@@ -20,8 +20,11 @@ Route::middleware(['plan','auth'])->group(function () {
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
-    Route::prefix('profile')->group(function () {
-        Route::resource('hotels',HotelController::class);
+    Route::prefix('hotels')->group(function () {
+        Route::group(['middleware' => 'hotel'],function () {
+            Route::get('/',[HotelController::class,'index'])->name('hotel.index');
+            Route::get('/create',[HotelController::class,'create'])->name('hotel.create');
+        });
     });
 
 });

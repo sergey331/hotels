@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\HotelRequest;
 use App\Models\Hotel;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class HotelController extends Controller
@@ -13,7 +14,10 @@ class HotelController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Profile/Hotels/Index');
+
+        return Inertia::render('Hotels/Index', [
+            "hotels" => auth()->user()
+        ]);
     }
 
     /**
@@ -21,13 +25,13 @@ class HotelController extends Controller
      */
     public function create()
     {
-        //
+       return Inertia::render('Hotels/Create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(HotelRequest $request)
     {
 
     }
@@ -51,7 +55,7 @@ class HotelController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Hotel $hotel)
+    public function update(HotelRequest $request, Hotel $hotel)
     {
         //
     }
