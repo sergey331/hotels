@@ -30,7 +30,7 @@ class User extends Authenticatable
 
     ];
 
-    protected $with = ['plan','hotel'];
+    protected $with = ['plans','hotel'];
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -51,9 +51,9 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function plan(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function plans()
     {
-        return $this->belongsTo(Plan::class);
+        return $this->hasMany(UserPlan::class);
     }
 
     public function hotel(): \Illuminate\Database\Eloquent\Relations\HasOne
