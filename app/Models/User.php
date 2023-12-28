@@ -26,8 +26,8 @@ class User extends Authenticatable
         'email',
         'password',
         'plan_id',
-        'plan_expired'
-
+        'plan_expired',
+        'type'
     ];
 
     protected $with = ['plans','hotel'];
