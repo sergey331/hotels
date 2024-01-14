@@ -26,7 +26,7 @@ class PlansController extends Controller
         if (!$currentPlan) {
             $historyFree = $user->plans()->where(['plan_id'=>1,'status' => 'inactive'])->first();
 
-            if (!$historyFree) {
+            if (!$historyFree || $historyFree->plan_id != $request->id) {
                 $user->plans()->where('status','active')->update(['status' => 'inactive']);
                 $expired = date('Y-m-d',strtotime('+' . $plan->period));
                 $user->plans()->create(['plan_id' => $plan->id]);

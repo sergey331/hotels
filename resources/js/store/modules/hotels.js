@@ -1,25 +1,21 @@
 const hotels = {
     namespace: true,
     state: () => ({
-        step: 1,
         form: {
-
-        },
-        errors: {
+            name: '',
+            city: '',
+            address: ''
 
         }
     }),
-    mutations: {
-        setStep(state,step) {
-            state.step = step
+    actions: {
+        async saveHotel({state}) {
+            await axios.post('/hotels/store',state.form )
         }
     },
-    actions: {
-
-    },
     getters: {
-        getStep(state) {
-            return state.step
+        getForm(state) {
+            return state.form;
         }
     }
 }

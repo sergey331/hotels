@@ -14,9 +14,8 @@ class HotelController extends Controller
      */
     public function index()
     {
-
         return Inertia::render('Hotels/Index', [
-            "hotels" => auth()->user()
+            "hotel" => Auth::user()->hotel
         ]);
     }
 
@@ -33,7 +32,9 @@ class HotelController extends Controller
      */
     public function store(HotelRequest $request)
     {
-
+        $user = Auth::user();
+        $user->hotel()->create($request->all());
+        return response()->json(['success' => true,'message' => 'hotel created successfully']);
     }
 
     /**

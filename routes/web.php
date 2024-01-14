@@ -20,10 +20,11 @@ Route::middleware(['plan','auth'])->group(function () {
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
-    Route::prefix('hotels')->group(function () {
+    Route::prefix('hotel')->group(function () {
         Route::group(['middleware' => 'hotel'],function () {
             Route::get('/',[HotelController::class,'index'])->name('hotel.index');
             Route::get('/create',[HotelController::class,'create'])->name('hotel.create');
+            Route::post('/store',[HotelController::class,'store'])->name('hotel.store');
         });
     });
 
