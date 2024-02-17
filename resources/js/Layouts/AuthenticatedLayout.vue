@@ -7,33 +7,18 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import PlanExpired from "@/Components/PlanExpired.vue";
 import menu from "@/Layouts/menu.js";
 const showingNavigationDropdown = ref(false);
-let collapsed = ref(false)
-let d =  ref(collapsed.value ? 65 : 290)
-
-let maxWidth = document.body.offsetWidth - d
-watch(() => collapsed.value, (first, second) => {
-  d.value = collapsed.value ? 65 : 290;
-});
-
+let maxWidth = document.body.offsetWidth - 65;
 </script>
 
 <template>
     <div>
-        <sidebar-menu :menu="menu" :collapsed="collapsed" :hideToggle="true" />
+        <sidebar-menu :menu="menu" :collapsed="true" :hideToggle="true" />
 
-        <div class="min-h-screen bg-gray-100" :style="`width: ${maxWidth}px;margin-left: ${d}px`">
+        <div class="min-h-screen bg-gray-100" :style="`width: ${maxWidth}px;margin-left: 65px`">
             <nav class="bg-white border-b border-gray-100">
 
                 <div class="w-full mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex justify-between h-16">
-                        <div class="flex ">
-
-                            <div class="bar" @click="collapsed = !collapsed" >
-                                <i v-if="collapsed" class="fa-solid fa-bars"></i>
-                                <i v-else class="fa-solid fa-xmark"></i>
-                            </div>
-
-                        </div>
                         <div class="flex items-center">
                             <PlanExpired  :plan_expired="$page.props.auth.user.plan_expired" />
                         </div>
@@ -74,9 +59,8 @@ watch(() => collapsed.value, (first, second) => {
                                 </Dropdown>
                             </div>
                         </div>
-
                         <!-- Hamburger -->
-                        <div class="-me-2 flex items-center sm:hidden">
+                        <div class="-me-2 flex items-center sm:hidden">dgs
                             <button
                                 @click="showingNavigationDropdown = !showingNavigationDropdown"
                                 class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
@@ -146,7 +130,7 @@ watch(() => collapsed.value, (first, second) => {
             </header>
 
             <!-- Page Content -->
-            <main>
+            <main class="p-6">
                 <slot/>
             </main>
         </div>

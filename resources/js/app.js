@@ -9,6 +9,8 @@ import store from "@/store/index.js";
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 import VueSidebarMenu from 'vue-sidebar-menu'
 import 'vue-sidebar-menu/dist/vue-sidebar-menu.css'
+import '@vuepic/vue-datepicker/dist/main.css';
+import VueDatePicker from '@vuepic/vue-datepicker';
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
     resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
@@ -18,6 +20,8 @@ createInertiaApp({
             .use(store)
             .use(VueSidebarMenu)
             .use(ZiggyVue, Ziggy)
+            .component('VueDatePicker', VueDatePicker)
+
             .mount(el);
     },
     progress: {

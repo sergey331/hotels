@@ -1,64 +1,277 @@
-<script setup>
-
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import {Head} from "@inertiajs/vue3";
-import EditHotel from "@/Components/hotels/EditHotel.vue";
-
-defineProps({
-    hotel: {
-        default: Object
-    }
-})
-</script>
-
 <template>
     <Head title="Hotels" />
     <AuthenticatedLayout>
         <EditHotel />
-        <div class="mt-6 mb-6">
-            <h1 class="text-center mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl"><span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">Hotel</span></h1>
+        <div class=" m-auto mt-6 mb-6 flex justify-between " >
+            <Header>Hotel - {{ hotel.name }}</Header>
+            <SecondaryButton v-if="!editable" @click="editable = true">Edit</SecondaryButton>
+            <div v-else class="flex gap-4">
+                <SecondaryButton @click="editable = false">Cancel</SecondaryButton>
+                <SecondaryButton @click = "save">Save</SecondaryButton>
+            </div>
         </div>
-        <div class="w-3/4 m-auto mt-8 grid grid-cols-2 gap-6 bg-white p-5">
+        <div class=" m-auto mt-8 grid grid-cols-2 gap-6 bg-white p-5">
             <div  class="border p-5">
-                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                <h4 class="mb-4">Rooms</h4>
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400" v-if="!editable">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                    <tr>
-                        <th scope="col"  class="px-6 py-3">Name</th>
-                        <th scope="col"  class="px-6 py-3">City</th>
-                        <th scope="col"  class="px-6 py-3">Address</th>
-                        <th scope="col"  class="px-6 py-3">Action</th>
-                    </tr>
+                        <tr>
+                            <th scope="col" class="px-6 py-3">id</th>
+                            <th scope="col" class="px-6 py-3">Price</th>
+                            <th scope="col" class="px-6 py-3">Currency</th>
+                            <th scope="col" class="px-6 py-3">Count</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                        <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ hotel.name }}</td>
-                        <td class="px-6 py-4">{{ hotel.city }}</td>
-                        <td class="px-6 py-4">{{ hotel.address }}</td>
-                        <td class="px-6 py-4">
-                            <button data-modal-target="default-modal" data-modal-toggle="default-modal" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
-                                Toggle modal
-                            </button>
-                        </td>
+                    <tr
+                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                        v-if="hotel.rooms.length"
+                    >
+                    </tr>
+                    <tr
+                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                        v-else
+                    >
+                        <td colspan="4" align="center" class="px-6 py-4">No Rooms</td>
                     </tr>
                     </tbody>
                 </table>
+
+                <div v-else>
+                    <SecondaryButton @click="addRoom">Add room</SecondaryButton>
+                    <div v-if="hotel.rooms.length">
+                        <div v-for="(room,index) in hotel.rooms" :key="index" class="mt-6">
+                            <h5>Room</h5>
+                            <div class="mb-3">
+                                <input-label>Price</input-label>
+                                <TextInput v-model="room.price" type="number"></TextInput>
+                            </div>
+                            <div class="mb-3">
+                                <input-label>Currency</input-label>
+                                <TextInput v-model="room.currency" ></TextInput>
+                            </div>
+                            <div class="mb-3">
+                                <input-label>Count Room</input-label>
+                                <TextInput v-model="room.room_count" type="number"></TextInput>
+                            </div>
+                            <div class="mb-3">
+                                <input-label>Images</input-label>
+                                <div
+                                    class="dropzone-container"
+                                    @dragover="dragover"
+                                    @dragleave="dragleave"
+                                    @drop="drop"
+                                >
+                                <input
+                                    type="file"
+                                    multiple
+                                    name="file"
+                                    id="fileInput"
+                                    class="hidden-input"
+                                    @change="onChange"
+                                    :data-index="index"
+                                    accept=".pdf,.jpg,.jpeg,.png"
+                                />
+                                    <label for="fileInput" class="file-label">
+                                        <div v-if="isDragging">Release to drop files here.</div>
+                                        <div v-else>Drop files here or <u>click here</u> to upload.</div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div  class="border p-5">
-                sa
-            </div>
-            <div  class="border">
-                sa
-            </div>
-            <div  class="border">
-                sa
-            </div>
-            <div  class="border">
-                sa
+                <h4 class="mb-4">Service</h4>
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400" v-if="!editable">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">id</th>
+                        <th scope="col" class="px-6 py-3">Price</th>
+                        <th scope="col" class="px-6 py-3">Currency</th>
+                        <th scope="col" class="px-6 py-3">Count</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr
+                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                        v-if="hotel.rooms.length"
+                    >
+                    </tr>
+                    <tr
+                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                        v-else
+                    >
+                        <td colspan="4" align="center" class="px-6 py-4">No Rooms</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div v-else>
+                    <SecondaryButton @click="addService">Add service</SecondaryButton>
+                    <div v-if="hotel.services.length">
+                        <div v-for="(service,index) in hotel.services" :key="index" class="mt-6">
+                            <h5>Service</h5>
+                            <div class="mb-3">
+                                <input-label>Name</input-label>
+                                <TextInput v-model="service.name" ></TextInput>
+                            </div>
+                            <div class="mb-3">
+                                <input-label>Description</input-label>
+                                <TextInput v-model="service.description" ></TextInput>
+                            </div>
+                            <div class="mb-3">
+                                <input-label>Time</input-label>
+                                <VueDatePicker v-model="service.time" :format="format"></VueDatePicker>
+                            </div>
+                            <div class="mb-3">
+                                <input-label>Image</input-label>
+                                <TextInput v-model="service.image" type="file"></TextInput>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </AuthenticatedLayout>
 </template>
 
+<script setup>
+
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import {Head} from "@inertiajs/vue3";
+import EditHotel from "@/Components/hotels/EditHotel.vue";
+import SecondaryButton from "@/Components/SecondaryButton.vue";
+import Header from "@/Components/Header.vue";
+import {ref} from "vue";
+import TextInput from "@/Components/TextInput.vue";
+import InputLabel from "@/Components/InputLabel.vue";
+
+let props = defineProps({
+    hotel: {
+        default: Object
+    }
+})
+
+let time = ref(new Date());
+
+const addRoom = () => {
+    let room = {
+        id: null,
+        price: 0,
+        currency: '',
+        room_count: 0,
+        room_images: []
+    }
+
+    props.hotel.rooms.push(room)
+}
+const addService = () => {
+    let service = {
+        id: null,
+        name: '',
+        description: '',
+        image: null,
+        time: '',
+    }
+
+    props.hotel.services.push(service)
+}
+
+const editable = ref(false)
+// const formattedDate = ref();
+const format = (date) => {
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+    const hour = date.getHours();
+    const min = date.getMinutes();
+    const sec = date.getSeconds();
+
+    return `${year}-${month}-${day} ${hour}:${min}:${sec}`;
+}
+
+let isDragging = ref(false)
+
+ const dragover = e => {
+    e.preventDefault();
+    isDragging.value = true;
+}
+const dragleave = () => {
+    isDragging.value = false;
+}
+const drop = e => {
+    e.preventDefault();
+    onChange();
+    isDragging.value = false;
+}
+const onChange = (e) => {
+    let index = e.target.getAttribute('data-index');
+    console.log('index',index)
+    let files = e.target.files;
+    for (let i = 0; i < files.length;i++) {
+        props.hotel.rooms[index].room_images.push(files[i])
+    }
+
+}
+
+const save = () => {
+    console.log(props.hotel.rooms,'e')
+}
+</script>
+
 <style scoped>
+    input {
+        width: 100%;
+    }
+
+    .main {
+        display: flex;
+        flex-grow: 1;
+        align-items: center;
+        height: 100vh;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .dropzone-container {
+        padding: 4rem;
+        background: #f7fafc;
+        border: 1px solid #e2e8f0;
+    }
+
+    .hidden-input {
+        opacity: 0;
+        overflow: hidden;
+        position: absolute;
+        width: 1px;
+        height: 1px;
+    }
+
+    .file-label {
+        font-size: 20px;
+        display: block;
+        cursor: pointer;
+    }
+
+    .preview-container {
+        display: flex;
+        margin-top: 2rem;
+    }
+
+    .preview-card {
+        display: flex;
+        border: 1px solid #a2a2a2;
+        padding: 5px;
+        margin-left: 5px;
+    }
+
+    .preview-img {
+        width: 50px;
+        height: 50px;
+        border-radius: 5px;
+        border: 1px solid #a2a2a2;
+        background-color: #a2a2a2;
+    }
 
 </style>
