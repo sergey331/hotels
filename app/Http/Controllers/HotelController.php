@@ -4,18 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\HotelRequest;
 use App\Models\Hotel;
+use App\Repositories\hotel\HotelRepository;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class HotelController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    protected HotelRepository $hotelRepository;
+
+    public function __construct(HotelRepository $hotelRepository)
+    {
+        $this->hotelRepository = $hotelRepository;
+    }
+
     public function index()
     {
         return Inertia::render('Hotels/Index', [
-            "hotel" => Auth::user()->hotel
+            'hotel' => Auth::user()->hotel,
         ]);
     }
 
@@ -24,7 +30,7 @@ class HotelController extends Controller
      */
     public function create()
     {
-       return Inertia::render('Hotels/Create');
+        return Inertia::render('Hotels/Create');
     }
 
     /**
@@ -34,38 +40,23 @@ class HotelController extends Controller
     {
         $user = Auth::user();
         $user->hotel()->create($request->all());
-        return response()->json(['success' => true,'message' => 'hotel created successfully']);
+
+        return response()->json(['success' => true, 'message' => 'hotel created successfully']);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Hotel $hotel)
+    public function save(Request $request)
     {
-        //
-    }
+        try {
+            $data = $request->all();
+            $validated = Hotel::validateRooms($data);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Hotel $hotel)
-    {
-        //
-    }
+            if ($validated->fails()) {
+                return response()->json(['errors' => $validated->getMessageBag()->all()]);
+            }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(HotelRequest $request, Hotel $hotel)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Hotel $hotel)
-    {
-        //
+            $this->hotelRepository->save($data);
+        } catch (\Exception $e) {
+            dd($e);
+        }
     }
 }

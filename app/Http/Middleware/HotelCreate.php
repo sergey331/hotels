@@ -16,11 +16,12 @@ class HotelCreate
     public function handle(Request $request, Closure $next): Response
     {
         $user = \auth()->user();
-        if (!$user->hotel && $request->route()->uri === 'hotels'){
+        if (! $user->hotel && $request->route()->uri === 'hotels') {
             return redirect()->route('hotel.create');
-        } else if($user->hotel && $request->route()->uri === 'hotels/create'){
+        } elseif ($user->hotel && $request->route()->uri === 'hotels/create') {
             return redirect()->route('hotel.index');
         }
+
         return $next($request);
     }
 }

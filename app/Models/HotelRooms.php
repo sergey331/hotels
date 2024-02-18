@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class HotelRooms extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
 
     public function hotel(): \Illuminate\Database\Eloquent\Relations\BelongsTo

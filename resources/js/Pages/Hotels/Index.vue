@@ -56,27 +56,15 @@
                             </div>
                             <div class="mb-3">
                                 <input-label>Images</input-label>
-                                <div
-                                    class="dropzone-container"
-                                    @dragover="dragover"
-                                    @dragleave="dragleave"
-                                    @drop="drop"
-                                >
+
                                 <input
                                     type="file"
                                     multiple
-                                    name="file"
-                                    id="fileInput"
-                                    class="hidden-input"
-                                    @change="onChange"
+                                    class="form-input"
+                                    @change="onChangeRoomImage"
                                     :data-index="index"
                                     accept=".pdf,.jpg,.jpeg,.png"
                                 />
-                                    <label for="fileInput" class="file-label">
-                                        <div v-if="isDragging">Release to drop files here.</div>
-                                        <div v-else>Drop files here or <u>click here</u> to upload.</div>
-                                    </label>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -126,7 +114,13 @@
                             </div>
                             <div class="mb-3">
                                 <input-label>Image</input-label>
-                                <TextInput v-model="service.image" type="file"></TextInput>
+                                <input
+                                    type="file"
+                                    class="form-input"
+                                    @change="onChangeServiceImage"
+                                    :data-index="index"
+                                    accept=".pdf,.jpg,.jpeg,.png"
+                                />
                             </div>
                         </div>
                     </div>
@@ -146,6 +140,7 @@ import Header from "@/Components/Header.vue";
 import {ref} from "vue";
 import TextInput from "@/Components/TextInput.vue";
 import InputLabel from "@/Components/InputLabel.vue";
+import axios from "axios";
 
 let props = defineProps({
     hotel: {
@@ -193,30 +188,54 @@ const format = (date) => {
 
 let isDragging = ref(false)
 
- const dragover = e => {
-    e.preventDefault();
-    isDragging.value = true;
-}
-const dragleave = () => {
-    isDragging.value = false;
-}
-const drop = e => {
-    e.preventDefault();
-    onChange();
-    isDragging.value = false;
-}
-const onChange = (e) => {
+const onChangeRoomImage = (e) => {
     let index = e.target.getAttribute('data-index');
-    console.log('index',index)
     let files = e.target.files;
     for (let i = 0; i < files.length;i++) {
         props.hotel.rooms[index].room_images.push(files[i])
     }
+}
 
+const onChangeServiceImage = e => {
+    let index = e.target.getAttribute('data-index');
+    let files = e.target.files;
+    props.hotel.services[index].image  = files[0]
 }
 
 const save = () => {
-    console.log(props.hotel.rooms,'e')
+
+
+    console.log('data',props.hotel)
+    let formData = new FormData();
+
+    props.hotel.rooms.forEach(item => {
+        formData.append('rooms[id][]',item.id)
+        formData.append('rooms[price][]',item.price)
+        formData.append('rooms[room_count][]',item.room_count)
+        formData.append('rooms[currency][]',item.currency)
+
+       if (item.room_images !== undefined) {
+           item.room_images.forEach(i => {
+               formData.append('rooms[room_images][][]',i)
+           })
+       }
+
+    })
+
+    props.hotel.services.forEach(item => {
+        formData.append('services[id][]',item.id)
+        formData.append('services[name][]',item.name)
+        formData.append('services[description][]',item.description)
+        formData.append('services[image][]',item.image)
+        formData.append('services[time][]',item.time)
+
+    })
+
+    axios.post(route('hotel.save'),formData,{
+        headers: {
+            'Content-Type' : 'multipart/form-data'
+        }
+    })
 }
 </script>
 
@@ -224,54 +243,4 @@ const save = () => {
     input {
         width: 100%;
     }
-
-    .main {
-        display: flex;
-        flex-grow: 1;
-        align-items: center;
-        height: 100vh;
-        justify-content: center;
-        text-align: center;
-    }
-
-    .dropzone-container {
-        padding: 4rem;
-        background: #f7fafc;
-        border: 1px solid #e2e8f0;
-    }
-
-    .hidden-input {
-        opacity: 0;
-        overflow: hidden;
-        position: absolute;
-        width: 1px;
-        height: 1px;
-    }
-
-    .file-label {
-        font-size: 20px;
-        display: block;
-        cursor: pointer;
-    }
-
-    .preview-container {
-        display: flex;
-        margin-top: 2rem;
-    }
-
-    .preview-card {
-        display: flex;
-        border: 1px solid #a2a2a2;
-        padding: 5px;
-        margin-left: 5px;
-    }
-
-    .preview-img {
-        width: 50px;
-        height: 50px;
-        border-radius: 5px;
-        border: 1px solid #a2a2a2;
-        background-color: #a2a2a2;
-    }
-
 </style>

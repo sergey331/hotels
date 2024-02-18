@@ -27,10 +27,11 @@ class User extends Authenticatable
         'password',
         'plan_id',
         'plan_expired',
-        'type'
+        'type',
     ];
 
-    protected $with = ['plans','hotel'];
+    protected $with = ['plans', 'hotel'];
+
     /**
      * The attributes that should be hidden for serialization.
      *

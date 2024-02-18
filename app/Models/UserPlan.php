@@ -8,9 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class UserPlan extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'user_id',
         'plan_id',
-        'status'
+        'status',
     ];
 }

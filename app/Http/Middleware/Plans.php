@@ -17,8 +17,8 @@ class Plans
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $plan = auth()->user()->plans()->where('status','active')->first();
-    
+        $plan = auth()->user()->plans()->where('status', 'active')->first();
+
         if ($plan) {
             $expired = Carbon::parse(Auth::user()->plan_expired);
             if (Carbon::now() > $expired) {

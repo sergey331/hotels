@@ -15,29 +15,29 @@ class PlanSeed extends Seeder
     {
         $plans = [
             [
-                'name' => "Free",
+                'name' => 'Free',
                 'title' => 'Free title',
                 'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-                'period' => "15 Days",
-                'currency' => "USD",
-                'price' => 0
+                'period' => '15 Days',
+                'currency' => 'USD',
+                'price' => 0,
             ],
             [
-                'name' => "Basic",
+                'name' => 'Basic',
                 'title' => 'Basic title',
                 'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-                'period' => "6 Months",
-                'currency' => "USD",
-                'price' => 250
+                'period' => '6 Months',
+                'currency' => 'USD',
+                'price' => 250,
             ],
             [
-                'name' => "Premium",
+                'name' => 'Premium',
                 'title' => 'Premium title',
                 'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-                'period' => "1 Year",
-                'currency' => "USD",
-                'price' => 250
-            ]
+                'period' => '1 Year',
+                'currency' => 'USD',
+                'price' => 250,
+            ],
         ];
 
         foreach ($plans as $plan) {

@@ -20,7 +20,7 @@ class AdminSeed extends Seeder
             'last_name' => 'Admin',
             'phone' => '45858895',
             'email' => 'admin@admin.ru',
-            'password' => Hash::make('111111111')
+            'password' => Hash::make('111111111'),
         ]);
     }
 }

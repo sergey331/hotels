@@ -19,9 +19,9 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): Response
     {
-        $userPlan = auth()->user()->plans()->where('status','active')->first();
+        $userPlan = auth()->user()->plans()->where('status', 'active')->first();
         $ids = [$userPlan->plan_id];
-        $historyFree = auth()->user()->plans()->where(['plan_id'=>1,'status' => 'inactive'])->first();
+        $historyFree = auth()->user()->plans()->where(['plan_id'=>1, 'status' => 'inactive'])->first();
         if ($historyFree && $userPlan->plan_id != 1) {
             $ids[] = 1;
         }
@@ -29,8 +29,8 @@ class ProfileController extends Controller
         return Inertia::render('Profile/Edit', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => session('status'),
-            'plans' => Plan::whereNotIn('id',$ids)->get(),
-            'plan' => Plan::find($userPlan->plan_id)
+            'plans' => Plan::whereNotIn('id', $ids)->get(),
+            'plan' => Plan::find($userPlan->plan_id),
         ]);
     }
 
