@@ -18,9 +18,9 @@ class Hotel extends Model
     {
         $rules = [
             'rooms' => 'required|array',
-            'rooms.*' => 'required|array',
-            'services' => 'required|array',
-            'services.*' => 'required|array',
+            'rooms.*.price' => 'required|numeric',
+            'rooms.*.room_count' => 'required|numeric',
+            'services' => 'nullable|array',
         ];
 
         return Validator::make($data, $rules);
@@ -30,6 +30,7 @@ class Hotel extends Model
     {
         return $this->hasMany(HotelRooms::class);
     }
+
     public function discountRooms(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(HotelPriceDiscount::class);

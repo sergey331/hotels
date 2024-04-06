@@ -11,8 +11,15 @@ class HotelRooms extends Model
 
     protected $guarded = [];
 
+    protected $with = ['images'];
+
     public function hotel(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Hotel::class);
+    }
+
+    public function images()
+    {
+        return $this->hasMany(HotelRoomImages::class, 'hotel_room_id');
     }
 }

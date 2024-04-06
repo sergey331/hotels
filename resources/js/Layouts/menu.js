@@ -12,6 +12,16 @@ export default [
         href: '/hotel',
         title: 'hotel',
         icon: 'fa fa-hotel',
+        child: [
+            {
+                href: 'hotel/rooms',
+                title: 'Rooms',
+            },
+            {
+                href: 'hotel/service',
+                title: 'Service',
+            }
+        ]
 
     }
 ]

@@ -8,6 +8,6 @@ class AuthHelper
 {
     public static function getCurrentHotel()
     {
-        return Auth::user()->hotel;
+        return Auth::user()->hotel ?? null;
     }
 }

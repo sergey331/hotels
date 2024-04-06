@@ -20,14 +20,9 @@ class HotelController extends Controller
 
     public function index()
     {
-        return Inertia::render('Hotels/Index', [
-            'hotel' => Auth::user()->hotel,
-        ]);
+        return Inertia::render('Hotels/Index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return Inertia::render('Hotels/Create');
@@ -44,19 +39,13 @@ class HotelController extends Controller
         return response()->json(['success' => true, 'message' => 'hotel created successfully']);
     }
 
-    public function save(Request $request)
+    public function rooms()
     {
-        try {
-            $data = $request->all();
-            $validated = Hotel::validateRooms($data);
+        return Inertia::render('Hotels/Rooms');
+    }
 
-            if ($validated->fails()) {
-                return response()->json(['errors' => $validated->getMessageBag()->all()]);
-            }
-
-            $this->hotelRepository->save($data);
-        } catch (\Exception $e) {
-            dd($e);
-        }
+    public function service()
+    {
+        return Inertia::render('Hotels/Service');
     }
 }
