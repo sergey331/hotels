@@ -13,12 +13,20 @@ class HotelCreate
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
+
+    CONST ROUTE_LIST = [
+      'hotel',
+      'hotel/rooms',
+      'hotel/service',
+    ];
     public function handle(Request $request, Closure $next): Response
     {
+
+//        dd($request->route());
         $user = \auth()->user();
-        if (! $user->hotel && $request->route()->uri === 'hotels') {
+        if (! $user->hotel && in_array($request->route()->uri, self::ROUTE_LIST)) {
             return redirect()->route('hotel.create');
-        } elseif ($user->hotel && $request->route()->uri === 'hotels/create') {
+        } elseif ($user->hotel && $request->route()->uri === 'hotel/create') {
             return redirect()->route('hotel.index');
         }
 

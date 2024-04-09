@@ -14,11 +14,11 @@ export default [
         icon: 'fa fa-hotel',
         child: [
             {
-                href: 'hotel/rooms',
+                href: '/hotel/rooms',
                 title: 'Rooms',
             },
             {
-                href: 'hotel/service',
+                href: '/hotel/service',
                 title: 'Service',
             }
         ]

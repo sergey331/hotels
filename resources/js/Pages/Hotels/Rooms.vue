@@ -4,6 +4,7 @@ import axios from "axios";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import DangerButton from "@/Components/DangerButton.vue";
+import Header from "@/Components/Header.vue";
 
 let columns = ref([
     "id",
@@ -87,9 +88,9 @@ onMounted(() => {
 
 <template>
     <authenticated-layout>
+      <Header>Rooms</Header>
         <div class=" m-auto mt-8  gap-6 bg-white p-5">
             <div class="border p-5">
-                <h4 class="mb-4">Rooms</h4>
                 <div class=" m-auto mt-6 mb-6 flex gap-4">
                     <input type="text" v-model="filters.search" class="form-control" placeholder="Search">
 
@@ -155,6 +156,7 @@ onMounted(() => {
 
                 <div class="mt-6 flex justify-end">
                     <pagination
+                        v-if="rooms.length"
                         v-model="page" :total-pages="totalPages" :slice-length="4" :showIcons="true" :per-page="perPage" :total-items="total"
                     />
                 </div>

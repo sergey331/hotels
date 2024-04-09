@@ -10,7 +10,7 @@ const hotels = {
     }),
     actions: {
         async saveHotel({state}) {
-            await axios.post('/hotels/store',state.form )
+            await axios.post('/hotel/store',state.form )
         }
     },
     getters: {
