@@ -91,21 +91,25 @@ onMounted(() => {
       <Header>Rooms</Header>
         <div class=" m-auto mt-8  gap-6 bg-white p-5">
             <div class="border p-5">
-                <div class=" m-auto mt-6 mb-6 flex gap-4">
+                <div class=" m-auto mt-6 mb-6  flex justify-between">
+                  <div class=" flex gap-4">
                     <input type="text" v-model="filters.search" class="form-control" placeholder="Search">
 
                     <select v-model="perPage">
-                        <option value="10">10</option>
-                        <option value="25">25</option>
-                        <option value="50">50</option>
-                        <option value="100">100</option>
+                      <option value="10">10</option>
+                      <option value="25">25</option>
+                      <option value="50">50</option>
+                      <option value="100">100</option>
                     </select>
                     <select v-model="filters.currency">
-                        <option value="">Currency</option>
-                        <option v-for="currency in currencies" :key="currency" :value="currency">{{ currency }}</option>
+                      <option value="">Currency</option>
+                      <option v-for="currency in currencies" :key="currency" :value="currency">{{ currency }}</option>
                     </select>
 
+                  </div>
+                  <a href="/hotel/rooms/new">New</a>
                 </div>
+
                 <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>

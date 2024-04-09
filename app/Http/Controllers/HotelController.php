@@ -27,10 +27,6 @@ class HotelController extends Controller
     {
         return Inertia::render('Hotels/Create');
     }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(HotelRequest $request)
     {
         $user = Auth::user();
