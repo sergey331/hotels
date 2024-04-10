@@ -13,12 +13,12 @@ class HotelCreate
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-
-    CONST ROUTE_LIST = [
-      'hotel',
-      'hotel/rooms',
-      'hotel/service',
+    const ROUTE_LIST = [
+        'hotel',
+        'hotel/rooms',
+        'hotel/service',
     ];
+
     public function handle(Request $request, Closure $next): Response
     {
         $user = \auth()->user();

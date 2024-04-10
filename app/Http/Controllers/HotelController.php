@@ -27,6 +27,7 @@ class HotelController extends Controller
     {
         return Inertia::render('Hotels/Create');
     }
+
     public function store(HotelRequest $request)
     {
         $user = Auth::user();
@@ -39,6 +40,7 @@ class HotelController extends Controller
     {
         return Inertia::render('Hotels/Rooms');
     }
+
     public function roomNew()
     {
         return Inertia::render('Hotels/RoomNew');

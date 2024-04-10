@@ -22,7 +22,6 @@ class RoomsRepositories
         }
 
         if (isset($filter['currency']) && $filter['currency'] !== '') {
-
             $rooms = $rooms->where('currency', '=', $filter['currency']);
         }
 
@@ -40,9 +39,10 @@ class RoomsRepositories
     public function getRoom($id)
     {
         $hotel = $this->getHotel();
-        if (!$hotel) {
+        if (! $hotel) {
             return null;
         }
+
         return HotelRooms::where(['hotel_id' => $hotel->id, 'id' => $id])->first();
     }
 
@@ -53,16 +53,16 @@ class RoomsRepositories
             'price' => $data['price'],
             'room_count' => $data['room_count'],
             'currency' => $data['currency'],
-            'hotel_id' => $hotel->id
+            'hotel_id' => $hotel->id,
         ];
-        $room_images =  $data['images'] ?? [];
+        $room_images = $data['images'] ?? [];
 
         $room = new HotelRooms();
 
         $room->fill($roomData);
         $room->save();
 
-        if (!empty($room_images)) {
+        if (! empty($room_images)) {
             foreach ($room_images as $image) {
                 $path = public_path('images/hotel/'.$hotel->id.'/rooms/'.$room->id);
                 $image_name = $this->uploadFile($path, $image);

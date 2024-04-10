@@ -28,7 +28,7 @@ class GetRoomData extends Controller
                 'total_pages' => $paginated->lastPage(),
                 'per_page' => $paginated->perPage(),
                 'total' => $paginated->total(),
-            ]
+            ],
         ]);
     }
 }

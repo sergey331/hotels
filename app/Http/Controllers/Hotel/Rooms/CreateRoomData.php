@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 
 class CreateRoomData extends Controller
 {
-
     private RoomsRepositories $repositories;
 
     public function __construct(RoomsRepositories $repositories)
