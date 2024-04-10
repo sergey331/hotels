@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Validator;
 
 class HotelRooms extends Model
 {
@@ -12,6 +13,19 @@ class HotelRooms extends Model
     protected $guarded = [];
 
     protected $with = ['images'];
+
+    public static function validatedCreatedData($data):  \Illuminate\Validation\Validator
+    {
+        $rules = [
+            'price' => 'required|numeric',
+            'room_count' => 'required|numeric',
+            'currency' => 'required|string',
+            'images' => 'nullable|array',
+            'images.*' => 'mimes:jpeg,jpg,png,gif',
+        ];
+
+        return Validator::make($data, $rules);
+    }
 
     public function hotel(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {

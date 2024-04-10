@@ -2,6 +2,7 @@
 
 namespace App\Repositories\hotel;
 
+use App\Models\HotelRoomImages;
 use App\Models\HotelRooms;
 use App\Repositories\AuthHelper;
 
@@ -9,9 +10,7 @@ class RoomsRepositories
 {
     public function getRooms($filter)
     {
-
-        $hotel = AuthHelper::getCurrentHotel();
-
+        $hotel = $this->getHotel();
         $rooms = HotelRooms::query();
 
         if ($hotel) {
@@ -36,5 +35,55 @@ class RoomsRepositories
         $per_page = $filter['per_page'] ?? 10;
 
         return $rooms->paginate($per_page);
+    }
+
+    public function getRoom($id)
+    {
+        $hotel = $this->getHotel();
+        if (!$hotel) {
+            return null;
+        }
+        return HotelRooms::where(['hotel_id' => $hotel->id, 'id' => $id])->first();
+    }
+
+    public function saveRoom($data)
+    {
+        $hotel = $this->getHotel();
+        $roomData = [
+            'price' => $data['price'],
+            'room_count' => $data['room_count'],
+            'currency' => $data['currency'],
+            'hotel_id' => $hotel->id
+        ];
+        $room_images =  $data['images'] ?? [];
+
+        $room = new HotelRooms();
+
+        $room->fill($roomData);
+        $room->save();
+
+        if (!empty($room_images)) {
+            foreach ($room_images as $image) {
+                $path = public_path('images/hotel/'.$hotel->id.'/rooms/'.$room->id);
+                $image_name = $this->uploadFile($path, $image);
+                HotelRoomImages::create([
+                    'hotel_room_id' => $room->id,
+                    'image' => $image_name,
+                ]);
+            }
+        }
+    }
+
+    private function getHotel()
+    {
+        return AuthHelper::getCurrentHotel();
+    }
+
+    public function uploadFile($path, $im): string
+    {
+        $image_name = time().'_'.$im->getClientOriginalName();
+        $im->move($path, $image_name);
+
+        return $image_name;
     }
 }

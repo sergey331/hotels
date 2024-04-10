@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class UpdateRoomData extends Controller
 {
-    public function __invoke()
+    public function __invoke(Request $request)
     {
     }
 }

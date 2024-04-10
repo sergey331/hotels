@@ -39,6 +39,10 @@ class HotelController extends Controller
     {
         return Inertia::render('Hotels/Rooms');
     }
+    public function roomNew()
+    {
+        return Inertia::render('Hotels/RoomNew');
+    }
 
     public function service()
     {

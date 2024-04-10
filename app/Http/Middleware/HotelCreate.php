@@ -21,10 +21,9 @@ class HotelCreate
     ];
     public function handle(Request $request, Closure $next): Response
     {
-
-//        dd($request->route());
         $user = \auth()->user();
-        if (! $user->hotel && in_array($request->route()->uri, self::ROUTE_LIST)) {
+        $uri = $request->route()->uri;
+        if (! $user->hotel && in_array($uri, self::ROUTE_LIST)) {
             return redirect()->route('hotel.create');
         } elseif ($user->hotel && $request->route()->uri === 'hotel/create') {
             return redirect()->route('hotel.index');
