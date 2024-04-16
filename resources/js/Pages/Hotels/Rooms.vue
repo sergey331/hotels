@@ -2,11 +2,9 @@
 import {onMounted, ref, watch} from "vue";
 import axios from "axios";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import SecondaryButton from "@/Components/SecondaryButton.vue";
-import DangerButton from "@/Components/DangerButton.vue";
 import Header from "@/Components/Header.vue";
-import Dropdown from "@/Components/Dropdown.vue";
-
+import DropdownMenu from 'v-dropdown-menu'
+import 'v-dropdown-menu/css'
 let columns = ref([
     "id",
     "price",
@@ -67,14 +65,14 @@ const getRooms = () => {
 }
 
 
-watch(page, (newValue, oldValue) => {
+watch(page, () => {
     getRooms();
 });
-watch(perPage, (newValue, oldValue) => {
+watch(perPage, () => {
     getRooms();
 });
 
-watch(filters.value, (newValue, oldValue) => {
+watch(filters.value, () => {
     getRooms();
 });
 
@@ -129,7 +127,7 @@ onMounted(() => {
                         </th>
                         <th scope="col" class="px-6 py-3">Count</th>
                         <th scope="col" class="px-6 py-3">Image</th>
-                        <th scope="col" class="px-6 py-3" align="center">Action</th>
+                        <th scope="col" class="px-6 py-3" >Action</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -149,48 +147,32 @@ onMounted(() => {
                             </a>
                         </td>
                         <td scope="col" class="px-6 py-3 relative">
-                            <Dropdown class="inline" popper-class="w-64 bg-white border rounded-lg shadow-md">
-                                <button class="dropdown-trigger inline-block px-6 py-3
-                leading-tight
-                rounded
-                transition
-                duration-150
-                ease-in-out
-"
-                                        type="button">
-                                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                            <dropdown-menu>
+                                <template #trigger>
+                                    <svg class="w-5 h-5" aria-hidden="true" style="cursor:pointer" xmlns="http://www.w3.org/2000/svg"
                                          fill="currentColor" viewBox="0 0 16 3">
                                         <path
                                             d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"/>
                                     </svg>
-                                </button>
+                                </template>
 
-                                <template #popper="{ hide }">
-                                    <ul class="py-1 text-gray-70">
+                                <template #body>
+                                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
                                         <li>
-                                            <a href="#"
-                                               class="block py-2 px-4 hover:bg-gray-100 focus:bg-gray-100 outline-none"
-                                               @click="hide">Click me to close</a>
+                                            <a :href="route('hotel.edit_room',room.id)" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
                                         </li>
                                         <li>
-                                            <a href="#"
-                                               class="block py-2 px-4 hover:bg-gray-100 focus:bg-gray-100 outline-none">Menu
-                                                item</a>
+                                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
                                         </li>
                                         <li>
-                                            <a href="#"
-                                               class="block py-2 px-4 hover:bg-gray-100 focus:bg-gray-100 outline-none">Another
-                                                menu item</a>
+                                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
                                         </li>
                                         <li>
-                                            <a href="#"
-                                               class="block py-2 px-4 hover:bg-gray-100 focus:bg-gray-100 outline-none">Something
-                                                else</a>
+                                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sign out</a>
                                         </li>
                                     </ul>
                                 </template>
-                            </Dropdown>
-
+                            </dropdown-menu>
                         </td>
                     </tr>
                     <tr

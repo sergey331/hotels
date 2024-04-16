@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\HotelRequest;
 use App\Models\Hotel;
+use App\Models\HotelRooms;
 use App\Repositories\hotel\HotelRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -44,6 +45,10 @@ class HotelController extends Controller
     public function roomNew()
     {
         return Inertia::render('Hotels/RoomNew');
+    }
+    public function editRoom(HotelRooms $room)
+    {
+        dd($room);
     }
 
     public function service()

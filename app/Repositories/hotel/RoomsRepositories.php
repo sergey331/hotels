@@ -74,6 +74,46 @@ class RoomsRepositories
         }
     }
 
+    public function updateRoom($id, $data)
+    {
+        $room = $this->getRoom($id);
+
+        if (!$room) {
+            return;
+        }
+        $hotel = $this->getHotel();
+        $roomData = [
+            'price' => $data['price'],
+            'room_count' => $data['room_count'],
+            'currency' => $data['currency'],
+            'hotel_id' => $hotel->id,
+        ];
+
+        $room->fill($roomData);
+        $room->save();
+        $room_images = $data['images'] ?? [];
+
+        if (! empty($room_images)) {
+            foreach ($room_images as $image) {
+                $path = public_path('images/hotel/'.$hotel->id.'/rooms/'.$room->id);
+                $image_name = $this->uploadFile($path, $image);
+                HotelRoomImages::create([
+                    'hotel_room_id' => $room->id,
+                    'image' => $image_name,
+                ]);
+            }
+        }
+    }
+
+    public function deleteRoom($id)
+    {
+        $room = $this->getRoom($id);
+        if (! $room) {
+            return false;
+        }
+
+    }
+
     private function getHotel()
     {
         return AuthHelper::getCurrentHotel();

@@ -44,6 +44,7 @@ Route::middleware(['plan', 'auth'])->group(function () {
             Route::post('/create-room-data', [CreateRoomData::class, '__invoke'])->name('hotel.create_room_data');
             Route::put('/update-room-data', [UpdateRoomData::class, '__invoke'])->name('hotel.update_room_data');
             Route::delete('/delete-room-data', [DeleteRoomData::class, '__invoke'])->name('hotel.delete_room_data');
+            Route::get('/room/edit/{room}', [HotelController::class, 'editRoom'])->name('hotel.edit_room');
 
             /* Service */
 
