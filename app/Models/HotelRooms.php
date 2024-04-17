@@ -20,6 +20,7 @@ class HotelRooms extends Model
             'price' => 'required|numeric',
             'room_count' => 'required|numeric',
             'currency' => 'required|string',
+            'number' => 'required|string',
             'images' => 'nullable|array',
             'images.*' => 'mimes:jpeg,jpg,png,gif',
         ];

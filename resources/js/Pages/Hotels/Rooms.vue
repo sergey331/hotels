@@ -5,10 +5,12 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import Header from "@/Components/Header.vue";
 import DropdownMenu from 'v-dropdown-menu'
 import 'v-dropdown-menu/css'
+import {toast} from "vue3-toastify";
 let columns = ref([
     "id",
     "price",
-    "currency"
+    "currency",
+    "number"
 ]);
 
 const sortKey = ref('');
@@ -35,21 +37,18 @@ let totalPages = ref(0);
 let total = ref(0);
 
 const getRooms = () => {
-
     let params = {
         "page": page.value,
         "per_page": perPage.value,
         "search": filters.value.search,
         "currency": filters.value.currency
     }
-
     if (sortKey.value !== '') {
         let sortK = sortKey.value
         let s = {}
         s[sortK] = sortOrder.value
         params['sort'] = s
     }
-
     axios.get(`/hotel/get-room-data`, {
         'params': params
     })
@@ -83,10 +82,24 @@ onMounted(() => {
     getRooms();
 })
 
+const deleteRoom = id => {
+   axios.delete(route('hotel.delete_room_data',id))
+       .then(({data}) => {
+           if (data.success) {
+               getRooms();
+               toast.success('Room deleted successfully', {
+                   position: toast.POSITION.TOP_CENTER,
+                   pauseOnFocusLoss: false,
+               });
+           }
+       })
+}
+
 </script>
 
 <template>
     <authenticated-layout>
+
         <Header>Rooms</Header>
         <div class=" m-auto mt-8  gap-6 bg-white p-5">
             <div class="border p-5">
@@ -140,6 +153,7 @@ onMounted(() => {
                         <td scope="col" class="px-6 py-3">{{ room.id }}</td>
                         <td scope="col" class="px-6 py-3">{{ room.price }}</td>
                         <td scope="col" class="px-6 py-3">{{ room.currency }}</td>
+                        <td scope="col" class="px-6 py-3">{{ room.number }}</td>
                         <td scope="col" class="px-6 py-3">{{ room.room_count }}</td>
                         <td scope="col" class="px-6 py-3">
                             <a href="#">
@@ -152,23 +166,29 @@ onMounted(() => {
                                     <svg class="w-5 h-5" aria-hidden="true" style="cursor:pointer" xmlns="http://www.w3.org/2000/svg"
                                          fill="currentColor" viewBox="0 0 16 3">
                                         <path
-                                            d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"/>
+                                            d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"
+                                        />
                                     </svg>
                                 </template>
 
                                 <template #body>
                                     <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
                                         <li>
-                                            <a :href="route('hotel.edit_room',room.id)" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
+                                            <a
+                                                :href="route('hotel.edit_room',room.id)"
+                                                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                            >
+                                                Edit
+                                            </a>
                                         </li>
                                         <li>
-                                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sign out</a>
+                                            <a
+                                                href="#"
+                                                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-red-800 text-red-800"
+                                                @click="deleteRoom(room.id)"
+                                            >
+                                                Delete
+                                            </a>
                                         </li>
                                     </ul>
                                 </template>

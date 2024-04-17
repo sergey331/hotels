@@ -6,12 +6,21 @@ import {ref} from "vue";
 import axios from "axios";
 import {toast} from "vue3-toastify";
 
+
+let props = defineProps({
+    room: {
+        default: Object
+    }
+});
+
 let form = ref({
-    'price': '',
-    'currency': '',
-    'room_count': '',
+    'price': props.room.price,
+    'currency': props.room.currency,
+    'room_count': props.room.room_count,
+    'number': props.room.number,
     'images': []
 })
+
 
 const onChangeRoomImage = (e) => {
     let images = e.target.files
@@ -27,6 +36,8 @@ const save = () => {
     formData.append('price', item.price)
     formData.append('room_count', item.room_count)
     formData.append('currency', item.currency)
+    formData.append('number', item.number)
+    formData.append('_method', 'put')
 
     if (item.images.length) {
         item.images.forEach(i => {
@@ -37,14 +48,14 @@ const save = () => {
     }
 
 
-    axios.post(route('hotel.create_room_data'), formData, {
+    axios.post(route('hotel.update_room_data',props.room.id), formData, {
         headers: {
             'Content-Type': 'multipart/form-data'
         }
     })
         .then(({data}) => {
             if (data.success) {
-                toast.success('Room created successfully', {
+                toast.success('Room updated successfully', {
                     position: toast.POSITION.TOP_CENTER,
                     pauseOnFocusLoss: false,
                 });
@@ -58,9 +69,23 @@ const save = () => {
 
 <template>
     <authenticated-layout>
-        <Header>New Room</Header>
+        <Header>Update Room</Header>
         <div class=" m-auto mt-8 bg-white p-5">
             <div class="max-w-md mx-auto">
+                <div class="relative z-0 w-full mb-5 group">
+                    <input
+                        type="text"
+                        v-model="form.number"
+                        id="number"
+                        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                        placeholder=""
+                    />
+                    <label for="number"
+                           class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                    >
+                        Number
+                    </label>
+                </div>
                 <div class="relative z-0 w-full mb-5 group">
                     <input
                         type="text"

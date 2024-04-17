@@ -48,7 +48,7 @@ class HotelController extends Controller
     }
     public function editRoom(HotelRooms $room)
     {
-        dd($room);
+        return Inertia::render('Hotels/RoomEdit', ['room' => $room]);
     }
 
     public function service()

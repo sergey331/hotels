@@ -5,6 +5,7 @@ namespace App\Repositories\hotel;
 use App\Models\HotelRoomImages;
 use App\Models\HotelRooms;
 use App\Repositories\AuthHelper;
+use Illuminate\Support\Facades\File;
 
 class RoomsRepositories
 {
@@ -52,6 +53,7 @@ class RoomsRepositories
         $roomData = [
             'price' => $data['price'],
             'room_count' => $data['room_count'],
+            'number' => $data['number'],
             'currency' => $data['currency'],
             'hotel_id' => $hotel->id,
         ];
@@ -85,6 +87,7 @@ class RoomsRepositories
         $roomData = [
             'price' => $data['price'],
             'room_count' => $data['room_count'],
+            'number' => $data['number'],
             'currency' => $data['currency'],
             'hotel_id' => $hotel->id,
         ];
@@ -111,7 +114,12 @@ class RoomsRepositories
         if (! $room) {
             return false;
         }
+        $hotel = $this->getHotel();
+        $room->delete();
 
+        $directory = public_path('images/hotel/'.$hotel->id.'/rooms/'.$room->id);
+        File::deleteDirectory($directory);
+        return true;
     }
 
     private function getHotel()
