@@ -48,7 +48,7 @@ Route::middleware(['plan', 'auth'])->group(function () {
 
             /* Service */
 
-            Route::get('/service', [HotelController::class, 'service'])->name('hotel.service');
+            Route::get('/service', [HotelController::class, 'service'])->name('hotel.services');
             Route::get('get-service-data', [GetServiceData::class, '__invoke'])->name('hotel.get_service_data');
             Route::post('create-service-data', [CreateServiceData::class, '__invoke'])->name('hotel.create_service_data');
             Route::put('update-service-data', [UpdateServiceData::class, '__invoke'])->name('hotel.update_service_data');
