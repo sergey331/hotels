@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('hotel_rooms', function (Blueprint $table) {
-            $table->string('number')->nullable();
+        Schema::create('roles', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
         });
     }
 
@@ -21,8 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('hotel_rooms', function (Blueprint $table) {
-            $table->dropColumn('number');
-        });
+        Schema::dropIfExists('roles');
     }
 };

@@ -30,7 +30,7 @@ class User extends Authenticatable
         'type',
     ];
 
-    protected $with = ['plans', 'hotel'];
+    protected $with = ['plans'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -55,10 +55,5 @@ class User extends Authenticatable
     public function plans()
     {
         return $this->hasMany(UserPlan::class);
-    }
-
-    public function hotel(): \Illuminate\Database\Eloquent\Relations\HasOne
-    {
-        return $this->hasOne(Hotel::class);
     }
 }
