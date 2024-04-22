@@ -1,10 +1,9 @@
 import {createStore} from "vuex";
-import hotels from "@/store/modules/hotels.js";
-
+import register from "@/store/modules/register.js";
 
 const store = createStore({
     modules: {
-        hotels
+        register
     }
 })
 

@@ -23,6 +23,7 @@ import '../../node_modules/@syncfusion/ej2-inputs/styles/material.css';
 import '../../node_modules/@syncfusion/ej2-popups/styles/material.css';
 import '../../node_modules/@syncfusion/ej2-lists/styles/material.css';
 import "../../node_modules/@syncfusion/ej2-vue-calendars/styles/material.css";
+
 import { FwbPagination } from 'flowbite-vue'
 import DropdownMenu from 'v-dropdown-menu'
 // import 'v-dropdown-menu/dist/vue3/v-dropdown-menu.css'

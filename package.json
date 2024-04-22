@@ -20,6 +20,7 @@
     },
     "dependencies": {
         "@syncfusion/ej2-vue-calendars": "^24.2.5",
+        "@syncfusion/ej2-vue-navigations": "^25.1.40",
         "@vuelidate/core": "^2.0.3",
         "@vuepic/vue-datepicker": "^7.4.1",
         "custom-vue-scrollbar": "^0.0.8",
