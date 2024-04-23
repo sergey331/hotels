@@ -8,7 +8,6 @@ const register = {
             phone: null,
             email: null,
             password: null,
-            avatar: null,
             dob: null,
         },
         address: {
@@ -35,6 +34,9 @@ const register = {
     mutations:  {
         setStep(state,step) {
             state.step = step
+        },
+        setGeneral(state,general) {
+            state.general = general
         }
     },
     actions: {

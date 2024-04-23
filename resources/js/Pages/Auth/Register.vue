@@ -1,14 +1,16 @@
 <script setup>
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import {useStore} from "vuex";
-import {ref} from "vue";
+import {computed, ref} from "vue";
 import General from "@/Components/register/General.vue";
 import Address from "@/Components/register/Address.vue";
 import Company from "@/Components/register/Company.vue";
 let store = useStore();
 
-let step = ref(store.getters.getStep)
-
+const step = computed(() => store.getters.getStep);
+const next = id => {
+   store.commit('setStep',id)
+}
 let steps = ref([
     {
         component: General
@@ -61,11 +63,17 @@ let st = ref([
                         <span class="hidden sm:inline-flex sm:ms-2">{{ s.name }}</span>
                     </span>
                </li>
+               <li class="flex md:w-full items-center">
+                   <span  class="me-2">4</span>
+                   <span class="hidden sm:inline-flex sm:ms-2">Finish</span>
+
+               </li>
 
            </ol>
 
            <component
                v-bind:is="steps[step].component"
+               @next="next"
            />
        </div>
 

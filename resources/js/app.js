@@ -15,7 +15,7 @@ import VueSelect  from "vue-select";
 import CustomScrollbar from 'custom-vue-scrollbar';
 import "vue-select/dist/vue-select.css";
 import 'custom-vue-scrollbar/dist/style.css';
-
+import 'flowbite-datepicker';
 import Vue3Toastify from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 import '../../node_modules/@syncfusion/ej2-base/styles/material.css';
@@ -27,6 +27,8 @@ import "../../node_modules/@syncfusion/ej2-vue-calendars/styles/material.css";
 import { FwbPagination } from 'flowbite-vue'
 import DropdownMenu from 'v-dropdown-menu'
 // import 'v-dropdown-menu/dist/vue3/v-dropdown-menu.css'
+import VueTailwindDatepicker from "vue-tailwind-datepicker";
+
 
 
 createInertiaApp({
@@ -37,6 +39,7 @@ createInertiaApp({
             .use(plugin)
             .use(store)
             .use(VueSidebarMenu)
+            .use(VueTailwindDatepicker)
             .use(
                 Vue3Toastify,
                 {
