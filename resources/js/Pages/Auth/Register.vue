@@ -5,7 +5,12 @@ import {computed, ref} from "vue";
 import General from "@/Components/register/General.vue";
 import Address from "@/Components/register/Address.vue";
 import Company from "@/Components/register/Company.vue";
+import Finish from "@/Components/register/Finish.vue";
 let store = useStore();
+
+let register = () => {
+    console.log('ok')
+}
 
 const step = computed(() => store.getters.getStep);
 const next = id => {
@@ -20,6 +25,9 @@ let steps = ref([
     },
     {
         component: Company
+    },
+    {
+        component: Finish
     }
 ])
 
@@ -74,6 +82,7 @@ let st = ref([
            <component
                v-bind:is="steps[step].component"
                @next="next"
+               @register = "register"
            />
        </div>
 

@@ -27,15 +27,15 @@ const next = () => {
 
 
 const validateGeneral = () => {
-    // let data = general.value
+    let data = general.value
     let valid = true;
-    // if (data.first_name === '' || data.first_name === null || data.last_name === '' || data.last_name === null || data.password === '' || data.password === null) {
-    //     valid = false;
-    // }
-    // let validEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/.test(data.email)
-    // if (!validEmail) {
-    //     valid = false;
-    // }
+    if (data.first_name === '' || data.first_name === null || data.last_name === '' || data.last_name === null || data.password === '' || data.password === null) {
+        valid = false;
+    }
+    let validEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/.test(data.email)
+    if (!validEmail) {
+        valid = false;
+    }
     return valid;
 }
 onMounted(() => {

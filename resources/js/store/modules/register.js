@@ -22,7 +22,6 @@ const register = {
             company_name: null,
             phone: null,
             email: null,
-            avatar: null,
             address: null,
             address1: null,
             country_id: null,

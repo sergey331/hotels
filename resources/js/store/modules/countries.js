@@ -39,6 +39,12 @@ const countries = {
     getters: {
         countries(state) {
             return state.countries;
+        },
+        states(state) {
+            return state.states;
+        },
+        cities(state) {
+            return state.cities;
         }
     }
 }
