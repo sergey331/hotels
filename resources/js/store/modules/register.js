@@ -39,8 +39,14 @@ const register = {
         }
     },
     actions: {
+
         async register({state}) {
-            await axios.post('/hotel/store',state.form )
+            let form = {
+                'general': state.general,
+                'address': state.address,
+                'company': state.company
+            }
+            await axios.post('/register',form )
         }
     },
     getters: {

@@ -9,7 +9,7 @@ import Finish from "@/Components/register/Finish.vue";
 let store = useStore();
 
 let register = () => {
-    console.log('ok')
+    store.dispatch('register')
 }
 
 const step = computed(() => store.getters.getStep);

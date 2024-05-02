@@ -13,12 +13,15 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
-
+use App\Service\Register\RegisterService;
 class RegisteredUserController extends Controller
 {
-    /**
-     * Display the registration view.
-     */
+
+    protected RegisterService $registerService;
+
+    public function __construct(RegisterService $registerService) {
+        $this->registerService = $registerService;
+    }
     public function create(): Response
     {
         return Inertia::render('Auth/Register');
@@ -29,31 +32,13 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
-        $request->validate([
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'phone' => 'required|string|max:255',
-            'type' => 'required|string',
-            'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+        $data = $request->all();
 
-        $user = User::create([
-            'name' => $request->first_name.' '.$request->last_name,
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'phone' => $request->phone,
-            'type' => $request->type,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        $this->registerService->register($data);
 
-        event(new Registered($user));
 
-        Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
     }
 }
