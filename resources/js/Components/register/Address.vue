@@ -52,8 +52,8 @@ const prev = () => {
         </div>
 
         <div class="mb-5">
-            <label for="country_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">State</label>
-            <select v-model="address.state_id" id="country_id" @change="selectState">
+            <label for="state_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">State</label>
+            <select v-model="address.state_id" id="state_id" @change="selectState">
                 <option value="">Select State</option>
                 <option v-if="states.length" v-for="state in states" :key="state.id" :value="state.id" >{{ state.name }}</option>
             </select>
@@ -61,7 +61,7 @@ const prev = () => {
 
         <div class="mb-5">
             <label for="city_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">City</label>
-            <select v-model="address.city_id" id="country_id" >
+            <select v-model="address.city_id" id="city_id" >
                 <option value="">Select city</option>
                 <option v-if="cities.length" v-for="city in cities" :key="city.id" :value="city.id" >{{ city.name }}</option>
             </select>

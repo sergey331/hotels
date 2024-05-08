@@ -8,14 +8,11 @@ import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 import store from "@/store/index.js";
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 import VueSidebarMenu from 'vue-sidebar-menu'
-import 'vue-sidebar-menu/dist/vue-sidebar-menu.css'
-import '@vuepic/vue-datepicker/dist/main.css';
-import VueDatePicker from '@vuepic/vue-datepicker';
+import 'vue-sidebar-menu/dist/vue-sidebar-menu.css';
 import VueSelect  from "vue-select";
 import CustomScrollbar from 'custom-vue-scrollbar';
 import "vue-select/dist/vue-select.css";
 import 'custom-vue-scrollbar/dist/style.css';
-import 'flowbite-datepicker';
 import Vue3Toastify from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 import '../../node_modules/@syncfusion/ej2-base/styles/material.css';
@@ -23,11 +20,9 @@ import '../../node_modules/@syncfusion/ej2-inputs/styles/material.css';
 import '../../node_modules/@syncfusion/ej2-popups/styles/material.css';
 import '../../node_modules/@syncfusion/ej2-lists/styles/material.css';
 import "../../node_modules/@syncfusion/ej2-vue-calendars/styles/material.css";
-
-import { FwbPagination } from 'flowbite-vue'
-import DropdownMenu from 'v-dropdown-menu'
-// import 'v-dropdown-menu/dist/vue3/v-dropdown-menu.css'
-import VueTailwindDatepicker from "vue-tailwind-datepicker";
+import Datepicker from "../../node_modules/vue3-datepicker/src/datepicker/Datepicker.vue";
+import { FwbPagination } from 'flowbite-vue';
+import DropdownMenu from 'v-dropdown-menu';
 
 
 
@@ -39,7 +34,6 @@ createInertiaApp({
             .use(plugin)
             .use(store)
             .use(VueSidebarMenu)
-            .use(VueTailwindDatepicker)
             .use(
                 Vue3Toastify,
                 {
@@ -51,11 +45,10 @@ createInertiaApp({
                 }
             )
             .use(ZiggyVue, Ziggy,DropdownMenu)
-            .component('VueDatePicker', VueDatePicker)
             .component('VueSelect', VueSelect)
             .component('CustomScrollbar', CustomScrollbar)
             .component('pagination', FwbPagination)
-
+            .component('datepicker', Datepicker)
             .mount(el);
     },
     progress: {

@@ -19,6 +19,7 @@ let getState = id => {
     return states.value.find(item => item.id === id)?.name
 }
 let getCity = id => {
+    console.log(cities.value,id)
     return cities.value.find(item => item.id === id)?.name
 }
 </script>
