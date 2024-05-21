@@ -28,7 +28,8 @@ const register = {
             state_id: null,
             city_id: null,
             zip: null,
-        }
+        },
+        success: false
     }),
     mutations:  {
         setStep(state,step) {
@@ -36,17 +37,25 @@ const register = {
         },
         setGeneral(state,general) {
             state.general = general
+        },
+        setSuccess(state,success) {
+            state.success = success
         }
     },
     actions: {
 
-        async register({state}) {
+        async register({state,commit}) {
             let form = {
                 'general': state.general,
                 'address': state.address,
                 'company': state.company
             }
             await axios.post('/register',form )
+                .then(({data}) => {
+                    if (data.success) {
+                        commit('setSuccess',data.success)
+                    }
+                })
         }
     },
     getters: {
@@ -61,6 +70,9 @@ const register = {
         },
         getCompany(state) {
             return state.company
+        },
+        getSuccess(state) {
+            return state.success
         }
     }
 }

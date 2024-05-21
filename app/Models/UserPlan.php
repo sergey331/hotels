@@ -14,4 +14,9 @@ class UserPlan extends Model
         'plan_id',
         'status',
     ];
+
+    public function plan()
+    {
+        return $this->belongsTo(Plan::class);
+    }
 }

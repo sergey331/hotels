@@ -3,7 +3,9 @@ const countries = {
     state: () => ({
         countries: [],
         states: [],
-        cities: []
+        cities: [],
+        statesCompany: [],
+        citiesCompany: []
     }),
     mutations: {
         setCountries(state, countries) {
@@ -14,6 +16,12 @@ const countries = {
         },
         setCities(state, cities) {
             state.cities = cities
+        },
+        setCompanyStates(state, states) {
+            state.statesCompany = states
+        },
+        setCompanyCities(state, cities) {
+            state.citiesCompany = cities
         },
     },
     actions: {
@@ -34,6 +42,18 @@ const countries = {
                 .then(({data}) => {
                     commit('setCities',data)
                 })
+        },
+        async getCompanyStates({commit},country_id) {
+            await axios.get('/states/'+country_id)
+                .then(({data}) => {
+                    commit('setCompanyStates',data)
+                })
+        },
+        async getCompanyCities({commit},state_id) {
+            await axios.get('/cities/'+state_id)
+                .then(({data}) => {
+                    commit('setCompanyCities',data)
+                })
         }
     },
     getters: {
@@ -45,6 +65,12 @@ const countries = {
         },
         cities(state) {
             return state.cities;
+        },
+        statesCompany(state) {
+            return state.statesCompany;
+        },
+        citiesCompany(state) {
+            return state.citiesCompany;
         }
     }
 }

@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Validator;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -17,18 +18,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'name',
-        'first_name',
-        'last_name',
-        'phone',
-        'is_admin',
-        'email',
-        'password',
-        'plan_id',
-        'plan_expired',
-        'type',
-    ];
+    protected $guarded = [];
 
     protected $with = ['plans'];
 
@@ -50,10 +40,22 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'dob' => 'date:Y-m-d',
     ];
 
+
+    public static function validateRegistration(array $data)
+    {
+        $rules = [
+            'general' => 'required|array',
+            'address' => 'required|array',
+            'company' => 'required|array',
+        ];
+
+        return Validator::make($data,$rules);
+    }
     public function plans()
     {
-        return $this->hasMany(UserPlan::class);
+        return $this->hasMany(UserPlan::class)->with(['plan']);
     }
 }

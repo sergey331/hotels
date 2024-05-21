@@ -9,17 +9,17 @@ onMounted(() => {
 })
 
 let countries = computed(() => store.getters.countries)
-let states = computed(() => store.getters.states)
-let cities = computed(() => store.getters.cities)
+let states = computed(() => store.getters.statesCompany)
+let cities = computed(() => store.getters.citiesCompany)
 let company = computed(() => store.getters.getCompany)
 
 const selectCountry = () => {
     let id = company.value.country_id;
-    store.dispatch('getStates',id)
+    store.dispatch('getCompanyStates',id)
 }
 const selectState = () => {
     let id = company.value.state_id;
-    store.dispatch('getCities',id)
+    store.dispatch('getCompanyCities',id)
 }
 
 const next = () => {

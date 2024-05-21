@@ -6,21 +6,31 @@ import {computed} from "vue";
 
 let general = computed(() => store.getters.getGeneral)
 let address = computed(() => store.getters.getAddress)
-let company = computed(() => store.getters.getAddress)
+let company = computed(() => store.getters.getCompany)
 
 let countries = computed(() => store.getters.countries)
 let states = computed(() => store.getters.states)
 let cities = computed(() => store.getters.cities)
 
-let getCountry = id => {
+let statesCompany = computed(() => store.getters.statesCompany)
+let citiesCompany = computed(() => store.getters.citiesCompany)
+
+const getCountry = id => {
     return countries.value.find(item => item.id === id)?.name
 }
-let getState = id => {
+const getState = id => {
     return states.value.find(item => item.id === id)?.name
 }
-let getCity = id => {
-    console.log(cities.value,id)
+const getCity = id => {
     return cities.value.find(item => item.id === id)?.name
+}
+
+const getCompanyState = id => {
+    return statesCompany.value.find(item => item.id === id)?.name
+}
+
+const getCompanyCity = id => {
+    return citiesCompany.value.find(item => item.id === id)?.name
 }
 </script>
 
@@ -76,7 +86,7 @@ let getCity = id => {
         <h4 class="mt-2">Company</h4>
         <ul class="max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400">
             <li>
-                Name - {{ company.last_name }}
+                Name - {{ company.company_name }}
             </li>
             <li>
                 Email - {{ company.email }}
@@ -94,10 +104,10 @@ let getCity = id => {
                 Country - {{ getCountry(company.country_id) }}
             </li>
             <li>
-                State - {{ getState(company.state_id) }}
+                State - {{ getCompanyState(company.state_id) }}
             </li>
             <li>
-                City - {{ getCity(company.city_id) }}
+                City - {{ getCompanyCity(company.city_id) }}
             </li>
             <li>
                 Zip code  - {{ company.zip }}

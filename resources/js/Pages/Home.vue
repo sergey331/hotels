@@ -24,7 +24,7 @@ defineProps({
     <Head title="Home" />
 
     <GuestLayout>
-        xz
+
     </GuestLayout>
 </template>
 

@@ -1,19 +1,13 @@
 <script setup>
-import {ref, watch} from 'vue';
+import {ref} from 'vue';
 
-import Dropdown from '@/Components/Dropdown.vue';
-import DropdownLink from '@/Components/DropdownLink.vue';
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import PlanExpired from "@/Components/PlanExpired.vue";
-import menu from "@/Layouts/menu.js";
 
-const showingNavigationDropdown = ref(false);
 let maxWidth = document.body.offsetWidth - 65;
 </script>
 
 <template>
     <div>
-        <!--        <sidebar-menu :menu="menu" :collapsed="true" :hideToggle="true" />-->
 
         <div class="min-h-screen bg-gray-100" :style="`width: ${maxWidth}px;margin-left: 65px`">
 
