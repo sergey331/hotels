@@ -17,7 +17,7 @@
             appendDate.value = 'Plan expired'
             clearInterval(interval.value)
         } else {
-            appendDate.value = 'Plan Expired in ' +  Math.floor(day) + 'D ' + Math.floor(hour) + 'H ' + Math.floor(min) + 'M ' + Math.floor(sec) + 'S '
+            appendDate.value = 'Plan Expired in ' +  Math.floor(day) + 'D ' + Math.floor(hour) + ':' + Math.floor(min) + ':' + Math.floor(sec) + ''
         }
     }
     interval.value = setInterval(function() {

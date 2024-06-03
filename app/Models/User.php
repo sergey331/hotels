@@ -58,4 +58,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserPlan::class)->with(['plan']);
     }
+    public function company()
+    {
+        return $this->hasOne(Company::class);
+    }
 }

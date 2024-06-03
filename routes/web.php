@@ -2,26 +2,22 @@
 
 use App\Http\Controllers\PlansController;
 use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Country\GetCountries;
 use App\Http\Controllers\Country\GetStates;
 use App\Http\Controllers\Country\GetCities;
+use App\Http\Controllers\Staff\Index as StaffIndex;
+use App\Http\Controllers\Staff\Create as StaffCreate;
+use App\Http\Controllers\Staff\Store as StaffStore;
 
-Route::get('/', function () {
-    return Inertia::render('Home', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
-
+Route::get('/',[HomeController::class,'index']);
 Route::middleware(['plan', 'auth'])->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class,'index'])->name('dashboard');
+    Route::get('/staffs',[StaffIndex::class,'__invoke'])->name('staffs.index');
+    Route::get('/staff/create',[StaffCreate::class,'__invoke'])->name('staffs.create');
+    Route::post('/staff/store',[StaffStore::class,'__invoke'])->name('staffs.store');
 });
 
 Route::middleware('auth')->group(function () {
